@@ -1,0 +1,116 @@
+
+    
+    console.log(round)
+    htmlPlayer1 = "";
+    htmlPlayer2 = "";
+    round.cardsPlayer1.forEach((card,i) => {
+       // htmlPlayer1 += `<div class="card" data-card-name="${card.img}">`;
+        //htmlPlayer1 += `<div class="back" name="${card.img}"></div>`;
+        htmlPlayer1 += `<div id="card${i}-player1" style="background: url(images/${card.img}) no-repeat"></div>`;
+        //htmlPlayer1 += `</div>`;
+      });
+
+      round.cardsPlayer2.forEach((card,i) => {
+        
+        //htmlPlayer2 += `<div class="card" data-card-name="${card.img}">`;
+        //htmlPlayer2 += `<div class="back" name="${card.img}"></div>`;
+        htmlPlayer2 += `<div id="card${i}-player2" style="background: url(images/${card.img}) no-repeat"></div>`;
+        //htmlPlayer2 += `</div>`;
+      });
+      console.log(htmlPlayer1)
+
+
+      document.querySelector("#player1").innerHTML = htmlPlayer1;
+
+      document.querySelector("#player2").innerHTML = htmlPlayer2;
+
+      if (round.turnIndex === 1){
+
+      document.querySelector("#card0-player1").onclick = () => {
+          round.turn1[0] = round.cardsPlayer1[0];
+          console.log(round.turn1)
+      }
+      document.querySelector("#card1-player1").onclick = () => {
+        round.turn1[0] = round.cardsPlayer1[1];
+        console.log(round.turn1)
+    }
+    document.querySelector("#card2-player1").onclick = () => {
+        round.turn1[0] = round.cardsPlayer1[2];
+        console.log(round.turn1)
+    }
+
+    document.querySelector("#card0-player2").onclick = () => {
+        round.turn1[1] = round.cardsPlayer2[0];
+        console.log(round.turn1)
+    }
+    document.querySelector("#card1-player2").onclick = () => {
+        round.turn1[1] = round.cardsPlayer2[1];
+        console.log(round.turn1)
+  }
+    document.querySelector("#card2-player2").onclick = () => {
+        round.turn1[1] = round.cardsPlayer2[2];
+        console.log(round.turn1)
+  }
+
+}
+
+if (round.turnIndex === 2){
+
+    document.querySelector("#card0-player1").onclick = () => {
+        round.turn1[0] = round.cardsPlayer1[0];
+        
+    }
+    document.querySelector("#card1-player1").onclick = () => {
+        round.turn2[0] = round.cardsPlayer1[0];
+        
+  }
+      document.querySelector("#card2-player1").onclick = () => {
+        round.turn2[0] = round.cardsPlayer1[0];
+        
+  }
+
+  document.querySelector("#card0-player2").onclick = () => {
+    round.turn2[0] = round.cardsPlayer1[0];
+    
+  }
+  document.querySelector("#card1-player2").onclick = () => {
+    round.turn2[0] = round.cardsPlayer1[0];
+          
+}
+    document.querySelector("#card2-player2").onclick = () => {
+        round.turn2[0] = round.cardsPlayer1[0];
+        
+}
+console.log(round.turn1.length)
+
+}
+
+if (round.turnIndex === 2){
+
+    document.querySelector("#card0-player1").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+         
+    }
+    document.querySelector("#card1-player1").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+          
+    }
+    document.querySelector("#card2-player1").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+          
+    }
+
+    document.querySelector("#card0-player2").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+          
+    }
+    document.querySelector("#card1-player2").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+        
+    }
+    document.querySelector("#card2-player2").onclick = () => {
+        round.turn3[0] = round.cardsPlayer1[0];
+        
+}
+
+}

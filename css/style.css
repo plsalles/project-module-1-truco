@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+
+}
+
+body {
+    
+    
+}
+
+.divBar {
+    height: 200px;
+    width: 100%;
+    background-image: url(../images/banner_historia-do-truco.png);
+    background-repeat: no-repeat;
+    background-position: top;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    
+    
+}
+
+.divBar > div > button {
+    margin: 0 0 40px 40px;
+    width: 100px;
+    height: 40px;
+}
+.mainTable {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid white;
+    height: 600px;
+    width: 100%;
+    background-image: url(../images/fundo.jpg);
+    text-align: center;
+    text
+    
+}
+
+.mainTable > div {
+    width: 33.3%;
+}
+
+.cards {
+  width:189px;
+  height:271px;
+  margin:10px;
+  padding:20px;
+  font-size:64px;
+  background-size: cover;
+    
+}
+#card1-player1 {
+    width:189px;
+    height:271px;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    background-size: cover;
+      
+}
+#card2-player1 {
+    width:189px;
+    height:271px;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    background-size: cover;
+      
+}
+
+#card0-player2 {
+    width:189px;
+    height:271px;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    background-size: cover;
+      
+}
+#card1-player2 {
+      width:189px;
+      height:271px;
+      margin:10px;
+      padding:20px;
+      font-size:64px;
+      background-size: cover;
+        
+  }
+#card2-player2 {
+      width:189px;
+      height:271px;
+      margin:10px;
+      padding:20px;
+      font-size:64px;
+      background-size: cover;
+        
+}
+  
+#cards-player2 {
+    width:189px;
+    height:271px;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    background-size: cover;
+      
+  }
+
+#player1 {
+    border: 1px solid white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+#player2 {
+    border: 1px solid white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+#table {
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+#table > div {
+    background-size: cover;
+}
+
+#table-player1 {
+
+}
+.card-turn {
+    width:50px;
+    height:100px;
+}
+
+.card-table-player1{
+        
+    width:50px;
+    height:50px;
+
+}
+.card-table-player2{
+        
+    width:50px;
+    height:50px;
+
+    
+    background-size: cover;
+}
+#table-players {
+    display: flex;
+    flex-direction: row;
+
+    
+}
