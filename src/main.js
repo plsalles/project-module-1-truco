@@ -53,7 +53,6 @@ class Game {
         this.player2 = player2;
         this.round;
         this.turnTie = false;
-        this.turnNumber = 1;
         this.turnIndex = 0;
         this.roundTurn = [];
         this.roundTurnCards = [];
@@ -69,9 +68,12 @@ class Game {
         this.htmlPlayer1 = "";
         this.htmlPlayer2 = "";
         this.htmlTable = "";
-        this.turn1;
-        this.turn2;
-        this.turn3;
+        this.htmlScore = "";
+        this.htmlPlayerTurn = "";
+        this.whoInitiateTheTurn = this.whoIsTheTurn();
+        
+        
+
         
          
         
@@ -81,21 +83,30 @@ class Game {
     
 
     whoIsTheTurn = () => {
-        let players = ['player1','player2'];
+        let players = ["Player1", "Player2"];
         return players[Math.floor(Math.random() * players.length)];
 
     }
 
     newRound = () => {
+        console.log("creating new round")
         this.round = new Round(this.cards,this.roundTurn,this.roundTurnCards);
         this.round.distributeCards();
         console.log(this.round)
         console.log(this.round.cardTurn)
+        this.playerTurn = this.whoInitiateTheTurn;
+        if (this.whoInitiateTheTurn === "Player1"){
+            this.whoInitiateTheTurn === "Player2";
+        }
         
+        if (this.whoInitiateTheTurn === "Player2"){
+            this.whoInitiateTheTurn === "Player1";
+        }
+
         this.round.cardsPlayer1.forEach((card,i) => {
             // htmlPlayer1 += `<div class="card" data-card-name="${card.img}">`;
-            //htmlPlayer1 += `<div class="back" name="${card.img}"></div>`;
-            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1" style="background: url(images/${card.img}) no-repeat"></div>`;
+            this.htmlPlayer1 += `<div class="cards back" name="style="background: url(images/back.jpg) no-repeat""></div>`;
+            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1 front" style="background: url(images/${card.img}) no-repeat"></div>`;
             //htmlPlayer1 += `</div>`;
         });
       
@@ -107,7 +118,10 @@ class Game {
             //htmlPlayer2 += `</div>`;
         });
 
-        this.htmlTable += `<div class="cards card-turn table" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></h1></div>`;
+        this.htmlTable += `<div class="cards card-turn table" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></div>`;
+        this.htmlScore += `<div class="score-players"><h1>Score Player1: ${this.player1.score}</h1></div>`;
+        this.htmlScore += `<div class="score-players"><h1>Score Player2: ${this.player2.score}</h1></div>`;
+        this.htmlScore += `<div class="player-turn"><h1>Player Turn: ${this.playerTurn}</h1></div>`;
         
 
 
@@ -117,52 +131,74 @@ class Game {
 
         document.querySelector("#cardTurn").innerHTML = this.htmlTable;
 
+        document.querySelector("#score").innerHTML = this.htmlScore;
+     
+
+
+
+
+
       
         
 
         document.querySelectorAll(".cards").forEach((card) => {
             card.addEventListener("click", () => {
-                console.log(card)
                 
-                if (this.cardsPlayed < 2){    
-                    if(card === document.querySelector('.card1-player1')){
-                        
-                        this.cardPlayer1Played = this.round.cardsPlayer1[0];
-                        this.cardsPlayed +=1;
-                        this.moveCard(this.cardPlayer1Played,'player1',1);
-                        
-                    }
+                
+                if (this.cardsPlayed < 2){  
+                    
+                    if(this.playerTurn == "Player1"){
+                        if(card === document.querySelector('.card1-player1')){
+                            
+                            this.cardPlayer1Played = this.round.cardsPlayer1[0];
+                            this.moveCard(this.cardPlayer1Played,'player1',1);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player2";
+                            this.updatePlayerTurn();
+                            
+                        }
 
-                    if(card === document.querySelector('.card2-player1')){
-                        this.cardPlayer1Played = this.round.cardsPlayer1[1];
-                        this.moveCard(this.cardPlayer1Played,'player1',2);
-                        this.cardsPlayed +=1;
-                    }
+                        if(card === document.querySelector('.card2-player1')){
+                            this.cardPlayer1Played = this.round.cardsPlayer1[1];
+                            this.moveCard(this.cardPlayer1Played,'player1',2);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player2";
+                            this.updatePlayerTurn();
+                        }
 
-                    if(card === document.querySelector('.card3-player1')){
-                        this.cardPlayer1Played = this.round.cardsPlayer1[2];
-                        this.moveCard(this.cardPlayer1Played,'player1',3);
-                        this.cardsPlayed +=1;
+                        if(card === document.querySelector('.card3-player1')){
+                            this.cardPlayer1Played = this.round.cardsPlayer1[2];
+                            this.moveCard(this.cardPlayer1Played,'player1',3);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player2";
+                            this.updatePlayerTurn();
+                        }
                     }
+                    if(this.playerTurn == "Player2"){
+                        if(card === document.querySelector('.card1-player2')){
+                            this.cardPlayer2Played = this.round.cardsPlayer2[0];
+                            this.moveCard(this.cardPlayer2Played,'player2',1);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player1";
+                            this.updatePlayerTurn();
+                        }
 
-                    if(card === document.querySelector('.card1-player2')){
-                        this.cardPlayer2Played = this.round.cardsPlayer2[0];
-                        this.moveCard(this.cardPlayer2Played,'player2',1);
-                        this.cardsPlayed +=1;
+                        if(card === document.querySelector('.card2-player2')){
+                            this.cardPlayer2Played = this.round.cardsPlayer2[1];
+                            this.moveCard(this.cardPlayer2Played,'player2',2);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player1";
+                            this.updatePlayerTurn();
+                        }
+
+                        if(card === document.querySelector('.card3-player2')){
+                            this.cardPlayer2Played = this.round.cardsPlayer2[2];
+                            this.moveCard(this.cardPlayer2Played,'player2',3);
+                            this.cardsPlayed +=1;
+                            this.playerTurn = "Player1";
+                            this.updatePlayerTurn();
+                        }
                     }
-
-                    if(card === document.querySelector('.card2-player2')){
-                        this.cardPlayer2Played = this.round.cardsPlayer2[1];
-                        this.moveCard(this.cardPlayer2Played,'player2',2);
-                        this.cardsPlayed +=1;
-                    }
-
-                    if(card === document.querySelector('.card3-player2')){
-                        this.cardPlayer2Played = this.round.cardsPlayer2[2];
-                        this.moveCard(this.cardPlayer2Played,'player2',3);
-                        this.cardsPlayed +=1;
-                    }
-
                     if(this.cardsPlayed === 2){
                         this.checkWhoWinTheTurn();
                     }
@@ -192,15 +228,24 @@ class Game {
         
         let html = "";
         let elem = "";
-        console.log(index)
-        console.log(player)
+
         html = `<div class="cards table table-players card-table-${player}" style="background: url(images/${card.img}) no-repeat"></div>`;
         document.querySelector(`#table-${player}`).innerHTML = html;
         elem = document.querySelector(`.card${index}-${player}`);
-        console.log(elem)
         elem.parentNode.removeChild(elem);
-      
-        
+        this.updatePlayerTurn();
+    }
+
+    updatePlayerTurn = () => {
+        let turn = "";
+        let parent = "";
+        let updateTurn = document.createElement('div');
+        turn = document.querySelector('.player-turn');
+        turn.parentNode.removeChild(turn);
+
+        parent = document.querySelector('#score');
+        updateTurn.innerHTML = `<div class="player-turn"><h1>Player Turn: ${this.playerTurn}</h1></div>`;
+        parent.appendChild(updateTurn);
     }
 
     removeCardTable = () => {
@@ -218,9 +263,6 @@ class Game {
     }
 
     generateNewRound = () => {
-        console.log(this)
-        console.log('player1 score'+this.player1.score)
-        console.log('player2 score'+this.player2.score)
         this.newRound();
             
     }
@@ -228,6 +270,7 @@ class Game {
         this.htmlPlayer1 = "";
         this.htmlPlayer2 = "";
         this.htmlTable = "";
+        this.htmlScore = "";
         this.cardsPlayed = 0;
         this.cardPlayer1Played = "";
         this.cardPlayer2Played = "";
@@ -241,8 +284,24 @@ class Game {
             i++;
         }
         elem = [];
+        this.roundTurn = [];
+        let score = document.querySelectorAll('.score-players');
+        console.log('printing score')
+        console.log(score.length)
+        i = 0;
+        while (i < score.length){
+            score[i].parentNode.removeChild(score[i]);
+            i++;
+        }
+        
+        if(this.whoInitiateTheTurn === "Player1"){
+            this.whoInitiateTheTurn = "Player2";
+        } else{this.whoInitiateTheTurn = "Player1";}
+        
+
 
     }
+
     clearCounters = () => {
         this.cardsPlayed = 0;
         this.cardPlayer1Played = "";
@@ -264,18 +323,33 @@ class Game {
         if (this.cardPlayer1Played.card === this.cardPlayer2Played.card){
             return 2;
         } else if(this.cardPlayer1Index > this.cardPlayer2Index){
-            //console.log("carta player1 é mais forte");
             return 0;
-        } else{ //console.log("carta player2 é mais forte");
-                return 1;
-                }
+        } else{ return 1;}
             
         
     }
     
     isRoundOver = () => {
+        
         console.log('rodadas player 1 won'+this.rodadaPlayer1Won)
         console.log('rodadas player 2 won'+this.rodadaPlayer2Won)
+        if (this.rodadaPlayer1Won ===1 && this.rodadaPlayer2Won===1 && this.turnTie === true){
+            console.log(this.roundTurn)
+            if(this.roundTurn[0]="Player1"){
+                this.player1.score +=1;
+                console.log('Player 1 won because won the first turn');
+                console.log(this.player1.score)
+                return true;  
+            }
+            if(this.roundTurn[0]="Player2"){
+                this.player2.score +=1;
+                console.log('Player 2 won because won the first turn');
+                console.log(this.player2.score)
+                return true;  
+            }
+
+
+        }
         if (this.turnTie === true){
             if(this.rodadaPlayer1Won ===1){
                 this.player1.score +=1;
@@ -298,10 +372,7 @@ class Game {
     }
 
     checkWhoWinTheTurn = () => {
-        console.log('chamou quem ganhou')
-        console.log(this.cardPlayer1Played)
-        console.log(this.cardPlayer2Played)
-        
+       
         this.round.bestCards.forEach((element, i) => {
   
                 
@@ -315,19 +386,27 @@ class Game {
                    
                   }                  
         });
-        console.log(`cardP1 index ${this.cardPlayer1Index}`)
-        console.log(`cardP2 index ${this.cardPlayer2Index}`)
-        
+
         if (this.compareCards()===0){
             this.rodadaPlayer1Won +=1;
+            this.playerTurn = "Player1";
+            this.updatePlayerTurn();
+            this.roundTurn.push('Player1');
         }
+
         if (this.compareCards()===1){
             this.rodadaPlayer2Won +=1;
+            this.playerTurn = "Player2";
+            this.updatePlayerTurn();
+            this.roundTurn.push('Player2');
         }
+
         if (this.compareCards()===2){
             this.turnTie = true;
+            this.roundTurn.push('Empate');
         }
         
+        console.log(this.playerTurn)
 
         if (this.isRoundOver()){
             this.clearTable();

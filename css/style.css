@@ -14,7 +14,7 @@ body {
     height: 200px;
     width: 100%;
     background-image: url(../images/banner_historia-do-truco.png);
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: top;
     display: flex;
     align-items: flex-end;
@@ -32,7 +32,6 @@ body {
 .mainTable {
     display: flex;
     flex-direction: row;
-    border: 1px solid white;
     height: 600px;
     width: 100%;
     background-image: url(../images/fundo.jpg);
@@ -54,6 +53,20 @@ body {
   background-size: cover;
     
 }
+.cards .back {
+    background-color: #456783;
+}
+.cards .front {
+    position:absolute;
+    left:0;top:0;
+    transform:rotateY(-180deg) translateZ(1px); backface-visibility:hidden;
+  }
+
+.cards.turned {pointer-events:none;}
+
+.cards.turned .front {transform:rotateY(0deg);}
+.cards.turned .back {transform:rotateY(180deg)}
+
 #card1-player1 {
     width:189px;
     height:271px;
@@ -112,23 +125,22 @@ body {
   }
 
 #player1 {
-    border: 1px solid white;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-align: top;
     
 }
 
 #player2 {
-    border: 1px solid white;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-align: top;
     
 }
 
 #table {
-    border: 1px solid white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -165,4 +177,14 @@ body {
     flex-direction: row;
 
     
+}
+
+.score-players {
+    color: white;
+    margin-left: 200px;
+}
+
+.player-turn {
+    color: white;
+    margin-left: 200px;
 }
