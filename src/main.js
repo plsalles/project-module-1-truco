@@ -106,7 +106,7 @@ class Game {
         this.round.cardsPlayer1.forEach((card,i) => {
             // htmlPlayer1 += `<div class="card" data-card-name="${card.img}">`;
             this.htmlPlayer1 += `<div class="cards back" name="style="background: url(images/back.jpg) no-repeat""></div>`;
-            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1 front" style="background: url(images/${card.img}) no-repeat"></div>`;
+            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1 front" style="background: url(images/${card.img}) no-repeat" ></div>`;
             //htmlPlayer1 += `</div>`;
         });
       

@@ -53,7 +53,7 @@ body {
   background-size: cover;
     
 }
-.cards .back {
+/* .cards .back {
     background-color: #456783;
 }
 .cards .front {
@@ -65,18 +65,19 @@ body {
 .cards.turned {pointer-events:none;}
 
 .cards.turned .front {transform:rotateY(0deg);}
-.cards.turned .back {transform:rotateY(180deg)}
+.cards.turned .back {transform:rotateY(180deg)} */
 
-#card1-player1 {
+.card1-player1 {
     width:189px;
     height:271px;
     margin:10px;
     padding:20px;
     font-size:64px;
     background-size: cover;
+    background-image: url(../images/back.jpg);
       
 }
-#card2-player1 {
+.card2-player1 {
     width:189px;
     height:271px;
     margin:10px;
@@ -86,7 +87,7 @@ body {
       
 }
 
-#card0-player2 {
+.card3-player1 {
     width:189px;
     height:271px;
     margin:10px;
@@ -95,7 +96,17 @@ body {
     background-size: cover;
       
 }
-#card1-player2 {
+
+.card1-player2 {
+    width:189px;
+    height:271px;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    background-size: cover;
+      
+}
+.card2-player2 {
       width:189px;
       height:271px;
       margin:10px;
@@ -104,7 +115,7 @@ body {
       background-size: cover;
         
   }
-#card2-player2 {
+.card3-player2 {
       width:189px;
       height:271px;
       margin:10px;
@@ -187,4 +198,8 @@ body {
 .player-turn {
     color: white;
     margin-left: 200px;
+}
+
+.test{
+    background-image: url(../images/back.jpg);
 }
