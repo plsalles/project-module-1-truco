@@ -5,10 +5,6 @@
 
 }
 
-body {
-    
-    
-}
 
 .divBar {
     height: 200px;
@@ -45,91 +41,78 @@ body {
 }
 
 .cards {
-  width:189px;
-  height:271px;
-  margin:10px;
-  padding:20px;
-  font-size:64px;
-  background-size: cover;
+width:100px;
+height:250px;
+margin:10px;
+padding:20px;
+font-size:64px;
+background-size: cover;
     
 }
-/* .cards .back {
-    background-color: #456783;
-}
-.cards .front {
-    position:absolute;
-    left:0;top:0;
-    transform:rotateY(-180deg) translateZ(1px); backface-visibility:hidden;
-  }
 
-.cards.turned {pointer-events:none;}
-
-.cards.turned .front {transform:rotateY(0deg);}
-.cards.turned .back {transform:rotateY(180deg)} */
 
 .card1-player1 {
-    width:189px;
-    height:271px;
+    width:100px;
+    height:250px;
     margin:10px;
-    padding:20px;
+
     font-size:64px;
     background-size: cover;
-    background-image: url(../images/back.jpg);
+
       
 }
 .card2-player1 {
-    width:189px;
-    height:271px;
+    width:100px;
+    height:250px;
     margin:10px;
-    padding:20px;
+
     font-size:64px;
     background-size: cover;
       
 }
 
 .card3-player1 {
-    width:189px;
-    height:271px;
+    width:100px;
+    height:250px;
     margin:10px;
-    padding:20px;
+
     font-size:64px;
     background-size: cover;
       
 }
 
 .card1-player2 {
-    width:189px;
-    height:271px;
+    width:100px;
+    height:250px;
     margin:10px;
-    padding:20px;
     font-size:64px;
     background-size: cover;
       
 }
 .card2-player2 {
-      width:189px;
-      height:271px;
-      margin:10px;
-      padding:20px;
-      font-size:64px;
-      background-size: cover;
+    width:100px;
+    height:250px;
+    margin:10px;
+
+    font-size:64px;
+    background-size: cover;
         
   }
 .card3-player2 {
-      width:189px;
-      height:271px;
-      margin:10px;
-      padding:20px;
-      font-size:64px;
-      background-size: cover;
+    width:100px;
+    height:250px;
+    margin:10px;
+
+    font-size:64px;
+    background-size: cover;
         
 }
   
 #cards-player2 {
-    width:189px;
-    height:271px;
+    width:100px;
+    height:250px;
     margin:10px;
-    padding:20px;
+
     font-size:64px;
     background-size: cover;
       
@@ -200,6 +183,28 @@ body {
     margin-left: 200px;
 }
 
-.test{
-    background-image: url(../images/back.jpg);
+.back{
+    width:100px;
+    height:250px;
+    background-image: url(../images/back.jpg)!important;
+}
+
+.back-turn{
+    position: absolute;
+    width:100px;
+    height:250px;
+    background-image: url(../images/back.jpg)!important;
+    background-repeat: no-repeat;
+    right: 48%
+}
+.card-turn{
+    position:absolute;
+    right: 50%;
+    width:100px;
+    height:250px;
+}
+
+#cardturn {
+    position: relative;
+    display: inline-block;
 }

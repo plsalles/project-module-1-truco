@@ -88,6 +88,30 @@ class Game {
 
     }
 
+    turnPlayerCards = () => {
+        console.log('turn player cards')
+        if(this.playerTurn == "Player1" ){
+            document.querySelectorAll('.cards-player2').forEach((card) => {
+                card.classList.add('back');
+            });
+            document.querySelectorAll('.cards-player1').forEach((card) => {
+                card.classList.remove('back');
+            });
+    
+        }
+        if(this.playerTurn == "Player2" ){
+            document.querySelectorAll('.cards-player1').forEach((card) => {
+                card.classList.add('back');
+            });
+            document.querySelectorAll('.cards-player2').forEach((card) => {
+                card.classList.remove('back');
+            });
+    
+        }
+
+
+    }
+
     newRound = () => {
         console.log("creating new round")
         this.round = new Round(this.cards,this.roundTurn,this.roundTurnCards);
@@ -95,6 +119,9 @@ class Game {
         console.log(this.round)
         console.log(this.round.cardTurn)
         this.playerTurn = this.whoInitiateTheTurn;
+
+
+        
         if (this.whoInitiateTheTurn === "Player1"){
             this.whoInitiateTheTurn === "Player2";
         }
@@ -105,8 +132,8 @@ class Game {
 
         this.round.cardsPlayer1.forEach((card,i) => {
             // htmlPlayer1 += `<div class="card" data-card-name="${card.img}">`;
-            this.htmlPlayer1 += `<div class="cards back" name="style="background: url(images/back.jpg) no-repeat""></div>`;
-            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1 front" style="background: url(images/${card.img}) no-repeat" ></div>`;
+            //this.htmlPlayer1 += `<div class="cards back" name="style="background: url(images/back.jpg) no-repeat""></div>`;
+            this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1" style="background: url(images/${card.img}) no-repeat" ></div>`;
             //htmlPlayer1 += `</div>`;
         });
       
@@ -117,8 +144,11 @@ class Game {
             this.htmlPlayer2 += `<div class="cards card${i+1}-player2 cards-player2" style="background: url(images/${card.img}) no-repeat"></div>`;
             //htmlPlayer2 += `</div>`;
         });
-
-        this.htmlTable += `<div class="cards card-turn table" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></div>`;
+        
+        this.htmlTable += `<div class="card-turn" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></div>`;
+        this.htmlTable += `<div class="back-turn"></div>`;
+        
+        
         this.htmlScore += `<div class="score-players"><h1>Score Player1: ${this.player1.score}</h1></div>`;
         this.htmlScore += `<div class="score-players"><h1>Score Player2: ${this.player2.score}</h1></div>`;
         this.htmlScore += `<div class="player-turn"><h1>Player Turn: ${this.playerTurn}</h1></div>`;
@@ -135,7 +165,21 @@ class Game {
      
 
 
+        console.log(document.querySelectorAll('.cards-player2'))
 
+        if(this.playerTurn == "Player1" ){
+            document.querySelectorAll('.cards-player2').forEach((card) => {
+                
+                card.classList.add('back');
+            });
+                     
+        }
+        if(this.playerTurn == "Player2" ){
+            document.querySelectorAll('.cards-player1').forEach((card) => {
+                card.classList.add('back');
+            });
+                
+        }
 
 
       
@@ -148,6 +192,9 @@ class Game {
                 if (this.cardsPlayed < 2){  
                     
                     if(this.playerTurn == "Player1"){
+                        // document.querySelectorAll('.cards-player2').forEach((card) => {
+                        //     card.classList.toggle('back');
+                        // });
                         if(card === document.querySelector('.card1-player1')){
                             
                             this.cardPlayer1Played = this.round.cardsPlayer1[0];
@@ -155,6 +202,7 @@ class Game {
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player2";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                             
                         }
 
@@ -164,6 +212,7 @@ class Game {
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player2";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                         }
 
                         if(card === document.querySelector('.card3-player1')){
@@ -172,15 +221,18 @@ class Game {
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player2";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                         }
                     }
                     if(this.playerTurn == "Player2"){
+                        
                         if(card === document.querySelector('.card1-player2')){
                             this.cardPlayer2Played = this.round.cardsPlayer2[0];
                             this.moveCard(this.cardPlayer2Played,'player2',1);
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player1";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                         }
 
                         if(card === document.querySelector('.card2-player2')){
@@ -189,6 +241,7 @@ class Game {
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player1";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                         }
 
                         if(card === document.querySelector('.card3-player2')){
@@ -197,6 +250,7 @@ class Game {
                             this.cardsPlayed +=1;
                             this.playerTurn = "Player1";
                             this.updatePlayerTurn();
+                            this.turnPlayerCards();
                         }
                     }
                     if(this.cardsPlayed === 2){
@@ -392,6 +446,7 @@ class Game {
             this.playerTurn = "Player1";
             this.updatePlayerTurn();
             this.roundTurn.push('Player1');
+            this.turnPlayerCards();
         }
 
         if (this.compareCards()===1){
@@ -399,6 +454,7 @@ class Game {
             this.playerTurn = "Player2";
             this.updatePlayerTurn();
             this.roundTurn.push('Player2');
+            this.turnPlayerCards();
         }
 
         if (this.compareCards()===2){
