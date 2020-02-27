@@ -192,9 +192,7 @@ class Game {
                 if (this.cardsPlayed < 2){  
                     
                     if(this.playerTurn == "Player1"){
-                        // document.querySelectorAll('.cards-player2').forEach((card) => {
-                        //     card.classList.toggle('back');
-                        // });
+
                         if(card === document.querySelector('.card1-player1')){
                             
                             this.cardPlayer1Played = this.round.cardsPlayer1[0];

@@ -145,12 +145,17 @@ background-size: cover;
 }
 
 #table-player1 {
+    position: fixed;
+    right: 55%;
+    top: 450px;
+}
 
+#table-player2 {
+    position: fixed;
+    right: 45%;
+    top: 450px;
 }
-.card-turn {
-    width:50px;
-    height:100px;
-}
+
 
 .card-table-player1{
         
@@ -169,9 +174,12 @@ background-size: cover;
 #table-players {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
     
 }
+
 
 .score-players {
     color: white;
@@ -190,21 +198,25 @@ background-size: cover;
 }
 
 .back-turn{
-    position: absolute;
+    position: fixed;
     width:100px;
     height:250px;
     background-image: url(../images/back.jpg)!important;
     background-repeat: no-repeat;
-    right: 48%
+    right: 48%;
+    margin-top: 10px;
+    
 }
 .card-turn{
-    position:absolute;
+    position: fixed;
     right: 50%;
     width:100px;
     height:250px;
+    margin-top: 10px;
 }
 
 #cardturn {
-    position: relative;
-    display: inline-block;
+
+    
 }
+
