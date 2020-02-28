@@ -70,7 +70,14 @@ class Game {
         this.htmlTable = "";
         this.htmlScore = "";
         this.htmlPlayerTurn = "";
+        this.htmlTrucoPlayerButtons = "";
         this.whoInitiateTheTurn = this.whoIsTheTurn();
+        this.gameFinshed = false;
+        this.truco = false;
+        this.trucoPlayer1 = false;
+        this.trucoPlayer2 = false;
+        this.trucoMultiplier = 1;
+        this.firstAskTruco = '';
         
         
 
@@ -119,6 +126,7 @@ class Game {
         console.log(this.round)
         console.log(this.round.cardTurn)
         this.playerTurn = this.whoInitiateTheTurn;
+        this.trucoMultiplier = 1;
 
 
         
@@ -131,28 +139,38 @@ class Game {
         }
 
         this.round.cardsPlayer1.forEach((card,i) => {
-            // htmlPlayer1 += `<div class="card" data-card-name="${card.img}">`;
-            //this.htmlPlayer1 += `<div class="cards back" name="style="background: url(images/back.jpg) no-repeat""></div>`;
             this.htmlPlayer1 += `<div class="cards card${i+1}-player1 cards-player1" style="background: url(images/${card.img}) no-repeat" ></div>`;
-            //htmlPlayer1 += `</div>`;
         });
       
         this.round.cardsPlayer2.forEach((card,i) => {
-            
-            //htmlPlayer2 += `<div class="card" data-card-name="${card.img}">`;
-            //htmlPlayer2 += `<div class="back" name="${card.img}"></div>`;
             this.htmlPlayer2 += `<div class="cards card${i+1}-player2 cards-player2" style="background: url(images/${card.img}) no-repeat"></div>`;
-            //htmlPlayer2 += `</div>`;
         });
         
-        this.htmlTable += `<div class="card-turn" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></div>`;
-        this.htmlTable += `<div class="back-turn"></div>`;
+        this.htmlTable += `<div class="cards card-turn" style="background: url(images/${this.round.cardTurn.img}) no-repeat"></div>`;
+        this.htmlTable += `<div class="cards back-turn"></div>`;
         
         
         this.htmlScore += `<div class="score-players"><h1>Score Player1: ${this.player1.score}</h1></div>`;
         this.htmlScore += `<div class="score-players"><h1>Score Player2: ${this.player2.score}</h1></div>`;
         this.htmlScore += `<div class="player-turn"><h1>Player Turn: ${this.playerTurn}</h1></div>`;
         
+        this.htmlTrucoPlayerButtons += `<div>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="truco-player1">TRUCO</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-6">6</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-9">9</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-12">12</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="yes-player1">YES</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="no-player1">NO</button>`;
+        this.htmlTrucoPlayerButtons += `</div>`;
+        this.htmlTrucoPlayerButtons += `<div></div>`;
+        this.htmlTrucoPlayerButtons += `<div>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="truco-player2">TRUCO</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-6">6</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-9">9</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-12">12</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="yes-player2">YES</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="no-player2">NO</button>`;
+        this.htmlTrucoPlayerButtons += `</div>`;
 
 
         document.querySelector("#player1").innerHTML = this.htmlPlayer1;
@@ -162,6 +180,8 @@ class Game {
         document.querySelector("#cardTurn").innerHTML = this.htmlTable;
 
         document.querySelector("#score").innerHTML = this.htmlScore;
+
+        document.querySelector("#footer").innerHTML = this.htmlTrucoPlayerButtons;
      
 
 
@@ -182,75 +202,231 @@ class Game {
         }
 
 
-      
+        console.log(document.querySelectorAll(".cards"))
         
 
         document.querySelectorAll(".cards").forEach((card) => {
             card.addEventListener("click", () => {
+            console.log(card) 
+            console.log(`first ask truco ${this.firstAskTruco}`) 
+            console.log(`this.truco ${this.truco}`)
+            console.log (`truco miltiplier ${this.trucoMultiplier}`) 
+            
                 
-                
+
                 if (this.cardsPlayed < 2){  
-                    
                     if(this.playerTurn == "Player1"){
-
-                        if(card === document.querySelector('.card1-player1')){
-                            
-                            this.cardPlayer1Played = this.round.cardsPlayer1[0];
-                            this.moveCard(this.cardPlayer1Played,'player1',1);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player2";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
-                            
-                        }
-
-                        if(card === document.querySelector('.card2-player1')){
-                            this.cardPlayer1Played = this.round.cardsPlayer1[1];
-                            this.moveCard(this.cardPlayer1Played,'player1',2);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player2";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
-                        }
-
-                        if(card === document.querySelector('.card3-player1')){
-                            this.cardPlayer1Played = this.round.cardsPlayer1[2];
-                            this.moveCard(this.cardPlayer1Played,'player1',3);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player2";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
-                        }
-                    }
-                    if(this.playerTurn == "Player2"){
+                        if(this.truco === false){
                         
-                        if(card === document.querySelector('.card1-player2')){
-                            this.cardPlayer2Played = this.round.cardsPlayer2[0];
-                            this.moveCard(this.cardPlayer2Played,'player2',1);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player1";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
-                        }
+                            if(card === document.querySelector('.card1-player1')){
+                                
+                                this.cardPlayer1Played = this.round.cardsPlayer1[0];
+                                this.moveCard(this.cardPlayer1Played,'player1',1);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                
+                            }
 
-                        if(card === document.querySelector('.card2-player2')){
-                            this.cardPlayer2Played = this.round.cardsPlayer2[1];
-                            this.moveCard(this.cardPlayer2Played,'player2',2);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player1";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
-                        }
+                            if(card === document.querySelector('.card2-player1')){
+                                this.cardPlayer1Played = this.round.cardsPlayer1[1];
+                                this.moveCard(this.cardPlayer1Played,'player1',2);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
 
-                        if(card === document.querySelector('.card3-player2')){
-                            this.cardPlayer2Played = this.round.cardsPlayer2[2];
-                            this.moveCard(this.cardPlayer2Played,'player2',3);
-                            this.cardsPlayed +=1;
-                            this.playerTurn = "Player1";
-                            this.updatePlayerTurn();
-                            this.turnPlayerCards();
+                            if(card === document.querySelector('.card3-player1')){
+                                this.cardPlayer1Played = this.round.cardsPlayer1[2];
+                                this.moveCard(this.cardPlayer1Played,'player1',3);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(card === document.querySelector('#truco-player1') && this.truco === false){
+                                console.log('TRUCO!!!');
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.firstAskTruco = 'Player1';
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                
+                            }
+
+                            if(this.firstAskTruco === 'Player2' && this.truco === false && this.trucoMultiplier === 3 && card === document.querySelector('#player1-6')){
+                                
+                                console.log('6!!!');
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+                            if(this.firstAskTruco === 'Player1' && this.truco === false && this.trucoMultiplier === 6 && card === document.querySelector('#player1-9')){
+                                
+                                console.log('9!!!');
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+                            if(this.firstAskTruco === 'Player2' && this.truco === false && this.trucoMultiplier === 9 && card === document.querySelector('#player1-12')){
+                                
+                                console.log('12!!!');
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.playerTurn = "Player2";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+
+                            
+                        }
+                    } 
+                        
+                        if (this.truco === true && this.trucoPlayer1 === false){
+                            if(card === document.querySelector('#yes-player1')){
+                                this.truco = false;
+                                this.trucoPlayer2 = false;
+                                this.playerTurn = "Player2";
+                                this.updateTrucoMultiplier();
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                
+                            }
+
+                            if(card === document.querySelector('#no-player1')){
+                                this.player2.score += this.trucoMultiplier;
+                                this.clearTable();
+                                this.generateNewRound();
+ 
+
+                                
+                            }
                         }
                     }
+            
+                    if(this.playerTurn == "Player2"){
+                        console.log('player 2 turn true')
+                        
+                        if(this.truco === false){
+                        
+                            if(card === document.querySelector('.card1-player2')){
+                                this.cardPlayer2Played = this.round.cardsPlayer2[0];
+                                this.moveCard(this.cardPlayer2Played,'player2',1);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(card === document.querySelector('.card2-player2')){
+                                this.cardPlayer2Played = this.round.cardsPlayer2[1];
+                                this.moveCard(this.cardPlayer2Played,'player2',2);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(card === document.querySelector('.card3-player2')){
+                                this.cardPlayer2Played = this.round.cardsPlayer2[2];
+                                this.moveCard(this.cardPlayer2Played,'player2',3);
+                                this.cardsPlayed +=1;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(card === document.querySelector('#truco-player2') && this.truco === false){
+                                console.log('TRUCO!!!');
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.firstAskTruco = 'Player2';
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                
+                            }
+
+                            if(this.firstAskTruco === 'Player1' && this.truco === false && this.trucoMultiplier === 3 && card === document.querySelector('#player2-6')){
+                                
+                                console.log('6!!!');
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+
+                            if(this.firstAskTruco === 'Player2' && this.truco === false && this.trucoMultiplier === 6 && card === document.querySelector('#player2-9')){
+                                
+                                console.log('9!!!');
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+
+                            if(this.firstAskTruco === 'Player1' && this.truco === false && this.trucoMultiplier === 9 && card === document.querySelector('#player2-12')){
+                                
+                                console.log('12!!!');
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.playerTurn = "Player1";
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                    
+                                
+                            }
+                           
+
+
+                            
+
+
+                        }
+                        
+                        if (this.truco === true && this.trucoPlayer2 === false){
+                            console.log('pending player2 response')
+                            if(card === document.querySelector('#yes-player2')){
+                                this.truco = false;
+                                this.trucoPlayer1 = false;
+                                this.playerTurn = "Player1";
+                                this.updateTrucoMultiplier();
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                                
+                            }
+
+                            if(card === document.querySelector('#no-player2')){
+                                console.log('no')
+                                this.player1.score += this.trucoMultiplier;
+                                this.clearTable();
+                                this.generateNewRound();
+ 
+
+                                
+                            }
+                        }
+                    
                     if(this.cardsPlayed === 2){
                         this.checkWhoWinTheTurn();
                     }
@@ -262,9 +438,27 @@ class Game {
         
     }
 
+    
+    updateTrucoMultiplier = () => {
+        switch (this.trucoMultiplier){
+            case 1: 
+                this.trucoMultiplier = 3;
+                break;
+            case 3: 
+                this.trucoMultiplier = 6;
+                break;
+            case 6: 
+                this.trucoMultiplier = 9;
+                break;
+            case 9: 
+                this.trucoMultiplier = 12;
+                break;
+             
+        }
+    }
 
     isGameOver = () => {
-        if(player1.score === 12 || player2.score === 12){
+        if(this.player1.score >= 12 || this.player2.score >= 12){
             return true;
         } else { return false;}
 
@@ -295,9 +489,12 @@ class Game {
         turn = document.querySelector('.player-turn');
         turn.parentNode.removeChild(turn);
 
-        parent = document.querySelector('#score');
+        if(!this.gameFinshed === true){
+            parent = document.querySelector('#score');
         updateTurn.innerHTML = `<div class="player-turn"><h1>Player Turn: ${this.playerTurn}</h1></div>`;
         parent.appendChild(updateTurn);
+        }
+        
     }
 
     removeCardTable = () => {
@@ -310,7 +507,7 @@ class Game {
             i++;
             }
             
-        }, 2000);
+        }, 1500);
 
     }
 
@@ -323,6 +520,7 @@ class Game {
         this.htmlPlayer2 = "";
         this.htmlTable = "";
         this.htmlScore = "";
+        this.htmlTrucoPlayerButtons = "";
         this.cardsPlayed = 0;
         this.cardPlayer1Played = "";
         this.cardPlayer2Played = "";
@@ -338,8 +536,8 @@ class Game {
         elem = [];
         this.roundTurn = [];
         let score = document.querySelectorAll('.score-players');
-        console.log('printing score')
-        console.log(score.length)
+        
+        
         i = 0;
         while (i < score.length){
             score[i].parentNode.removeChild(score[i]);
@@ -388,13 +586,13 @@ class Game {
         if (this.rodadaPlayer1Won ===1 && this.rodadaPlayer2Won===1 && this.turnTie === true){
             console.log(this.roundTurn)
             if(this.roundTurn[0]="Player1"){
-                this.player1.score +=1;
+                this.player1.score += 1 * this.trucoMultiplier;
                 console.log('Player 1 won because won the first turn');
                 console.log(this.player1.score)
                 return true;  
             }
             if(this.roundTurn[0]="Player2"){
-                this.player2.score +=1;
+                this.player2.score += 1 * this.trucoMultiplier;
                 console.log('Player 2 won because won the first turn');
                 console.log(this.player2.score)
                 return true;  
@@ -404,20 +602,20 @@ class Game {
         }
         if (this.turnTie === true){
             if(this.rodadaPlayer1Won ===1){
-                this.player1.score +=1;
+                this.player1.score += 1 * this.trucoMultiplier;
                 return true;
             } else if(this.rodadaPlayer2Won ===1){
-                this.player2.score +=1;
+                this.player2.score += 1 * this.trucoMultiplier;
                 return true;
             } else { return false;}
 
         }
         if (this.rodadaPlayer1Won ===2){
-            this.player1.score +=1;
+            this.player1.score += 1 * this.trucoMultiplier;
             console.log('player1 ganhou a rodada')
             return true;
         } else if (this.rodadaPlayer2Won === 2){
-            this.player2.score +=1;
+            this.player2.score += 1 * this.trucoMultiplier;
             console.log('player2 ganhou a rodada')
             return true;
         } else {return false;} 
@@ -463,13 +661,15 @@ class Game {
         console.log(this.playerTurn)
 
         if (this.isRoundOver()){
-            this.clearTable();
-            console.log('teste')
-            console.log(this.isGameOver());
-            if(!this.isGameOver()){
-                this.generateNewRound();
-            } else {this.terminateGame();
-            }
+            console.log(this.player1.score)
+            console.log(this.player2.score)
+            const timeoutId = setTimeout(() => {
+                this.clearTable();
+                
+                if(this.isGameOver()){
+                this.terminateGame();
+                } else { this.generateNewRound();}
+            }, 1500);
         } else {
             this.turnNumber += 1;
             this.clearCounters();
@@ -478,7 +678,28 @@ class Game {
 
 
         
-    }    
+    }
+    
+    terminateGame = () => {
+        let html = "";
+        this.clearTable();
+        this.gameFinshed = true;
+        this.updatePlayerTurn();
+        if(this.player1.score >= 12){
+            html += `<div class="winner"><h1>Player 1 won the game</h1></div>`;
+            document.querySelector("#table").innerHTML = html;
+
+        }
+
+        if(this.player2.score >= 12){
+            html += `<div class="winner"><h1>Player 2 won the game</h1></div>`;
+            document.querySelector("#table").innerHTML = html;
+
+        }
+
+
+
+    }
 
 }
 
@@ -498,6 +719,7 @@ class Round {
         this.round;
         this.roundTurn = roundTurn;
         this.roundTurnCards = roundTurnCards;
+        
     }
 
     suffledCards = (array) => {
