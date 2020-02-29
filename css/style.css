@@ -9,12 +9,15 @@
 .divBar {
     height: 200px;
     width: 100%;
-    background-image: url(../images/truco.jpg);
+    background-image: url(../images/truco2-2.jpg);
     background-repeat: no-repeat;
     background-position: center;
+    background-position: top;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
+    /* background-color: #33CCFF; */
+    background-color: #484848;
 
     
     
@@ -24,6 +27,8 @@
     margin: 0 0 40px 40px;
     width: 100px;
     height: 40px;
+    background-color:#F0F0F0;
+    
 }
 .mainTable {
     display: flex;
@@ -39,17 +44,6 @@
 .mainTable > div {
     width: 33.3%;
 }
-
-.cards {
-/* width:100px;
-height:250px;
-margin:10px;
-padding:20px;
-font-size:64px; */
-
-    
-}
-
 
 .card1-player1 {
     width:100px;
@@ -183,12 +177,20 @@ font-size:64px; */
 
 .score-players {
     
-    margin-left: 200px;
+    margin-left: 50px;
+    border: 1px solid #787878;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white
 }
 
 .player-turn {
     
-    margin-left: 200px;
+    margin-left: 50px;
+    border: 1px solid#787878;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
 }
 
 .back{

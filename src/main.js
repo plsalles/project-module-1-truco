@@ -210,6 +210,11 @@ class Game {
 
         document.querySelectorAll(".cards").forEach((card) => {
             card.addEventListener("click", () => {
+                console.log(this.truco)
+                console.log(this.trucoIndex)
+                console.log(this.trucoMultiplier)
+                console.log(this.trucoPlayer1)
+                console.log(this.trucoPlayer2)
             
                 if (this.cardsPlayed < 2){  
                     if(this.playerTurn == "Player1"){
@@ -252,7 +257,7 @@ class Game {
                                 this.firstAskTruco = 'Player1';
                                 this.trucoIndex = 3;
                                 this.playerTurn = "Player2";
-                                this.updateTrucoButtons();
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
@@ -264,6 +269,7 @@ class Game {
                                 this.truco = true;
                                 this.trucoPlayer1 = true;
                                 this.playerTurn = "Player2";
+                                this.trucoIndex = 6;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
@@ -275,6 +281,7 @@ class Game {
                                 this.truco = true;
                                 this.trucoPlayer1 = true;
                                 this.playerTurn = "Player2";
+                                this.trucoIndex = 9;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
@@ -288,6 +295,7 @@ class Game {
                                 this.truco = true;
                                 this.trucoPlayer1 = true;
                                 this.playerTurn = "Player2";
+                                this.trucoIndex = 12;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
@@ -303,10 +311,13 @@ class Game {
                             if(card === document.querySelector('#yes-player1')){
                                 this.truco = false;
                                 this.trucoPlayer2 = false;
-                                //this.playerTurn = "Player2";
+                                
                                 if (this.responseOnly === true && this.playerTurn === 'PLayer1'){
                                     this.responseOnly = false;
                                 } else {this.playerTurn = "Player2";}
+                                
+                                document.querySelector('#yes-player1').classList.add('disabled');
+                                document.querySelector('#no-player1').classList.add('disabled');
                                 this.updateTrucoMultiplier();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
@@ -321,6 +332,7 @@ class Game {
                                 this.trucoMultiplier = 3;
                                 this.trucoIndex = 6;
                                 this.responseOnly = true;
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
 
@@ -334,6 +346,7 @@ class Game {
                                 this.trucoMultiplier = 6;
                                 this.trucoIndex = 9;
                                 this.responseOnly = false;
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                             }
@@ -346,12 +359,16 @@ class Game {
                                 this.trucoMultiplier = 9;
                                 this.trucoIndex = 12;
                                 this.responseOnly = true;
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                             }
 
                             if(card === document.querySelector('#no-player1')){
                                 this.player2.score += this.trucoMultiplier;
+                                this.truco = false;
+                                this.trucoPlayer1 = false;
+                                this.trucoPlayer2 - false;
                                 this.clearTable();
                                 this.generateNewRound();
  
@@ -399,7 +416,7 @@ class Game {
                                 this.firstAskTruco = 'Player2';
                                 this.trucoIndex = 3;
                                 this.playerTurn = "Player1";
-                                this.updateTrucoButtons();
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
@@ -412,6 +429,7 @@ class Game {
                                 this.trucoPlayer2 = true;
                                 this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
+                                this.trucoIndex = 6;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
@@ -425,6 +443,7 @@ class Game {
                                 this.trucoPlayer2 = true;
                                 this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
+                                this.trucoIndex = 9;
                                 this.responseOnly = false;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
@@ -439,6 +458,7 @@ class Game {
                                 this.trucoPlayer2 = true;
                                 this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
+                                this.trucoIndex = 12;
                                 this.responseOnly = true;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
@@ -457,6 +477,8 @@ class Game {
                                     this.responseOnly = false;
                                 } else {this.playerTurn = "Player1";}
 
+                                document.querySelector('#yes-player2').classList.add('disabled');
+                                document.querySelector('#no-player2').classList.add('disabled');
                                 this.updateTrucoMultiplier();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
@@ -472,7 +494,7 @@ class Game {
                                 this.trucoMultiplier = 3;
                                 this.trucoIndex = 6;
                                 this.responseOnly = true;
-                                console.log(this.trucoPlayer1)
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                             }
@@ -485,6 +507,7 @@ class Game {
                                 this.trucoMultiplier = 6;
                                 this.trucoIndex = 9;
                                 this.responseOnly = false;
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                             }
@@ -497,6 +520,7 @@ class Game {
                                 this.trucoMultiplier = 9;
                                 this.trucoIndex = 12;
                                 this.responseOnly = true;
+                                this.updateTrucoButtonsUsingTrucoIndex();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                             }
@@ -504,6 +528,9 @@ class Game {
                             if(card === document.querySelector('#no-player2')){
                                 console.log('no')
                                 this.player1.score += this.trucoMultiplier;
+                                this.truco = false;
+                                this.trucoPlayer1 = false;
+                                this.trucoPlayer2 - false;
                                 this.clearTable();
                                 this.generateNewRound();
  
@@ -523,15 +550,63 @@ class Game {
         
     }
 
-    updateTrucoButtons = () => {
+    updateTrucoButtonsUsingTrucoIndex = () => {
+
         switch (this.trucoIndex){
             case 3: 
                 document.querySelector('#truco-player1').classList.add('disabled');
                 document.querySelector('#truco-player2').classList.add('disabled');
+                if(this.firstAskTruco === 'Player1'){
+                    document.querySelector('#player2-6').classList.remove('disabled');
+                    document.querySelector('#yes-player2').classList.remove('disabled');
+                    document.querySelector('#no-player2').classList.remove('disabled');
+                } else {document.querySelector('#player1-6').classList.remove('disabled');
+                        document.querySelector('#yes-player1').classList.remove('disabled');
+                        document.querySelector('#no-player1').classList.remove('disabled');           
+                }
+                
                 break;
+            case 6:
+                if(this.firstAskTruco === 'Player1'){
+                    document.querySelector('#player2-6').classList.add('disabled');
+                    document.querySelector('#player1-9').classList.remove('disabled');
+                    document.querySelector('#yes-player1').classList.remove('disabled');
+                    document.querySelector('#no-player1').classList.remove('disabled');
+                    document.querySelector('#yes-player2').classList.add('disabled');
+                    document.querySelector('#no-player2').classList.add('disabled');
 
 
+                } else {document.querySelector('#player1-6').classList.add('disabled');           
+                        document.querySelector('#player2-9').classList.remove('disabled');
+                        document.querySelector('#yes-player2').classList.remove('disabled');
+                        document.querySelector('#no-player2').classList.remove('disabled');
+                        document.querySelector('#yes-player1').classList.add('disabled');
+                        document.querySelector('#no-player1').classList.add('disabled'); }
+                break;
+            case 9:
+                    if(this.firstAskTruco === 'Player1'){
+                        document.querySelector('#player1-9').classList.add('disabled');
+                        document.querySelector('#player2-12').classList.remove('disabled');
+                        document.querySelector('#yes-player2').classList.remove('disabled');
+                        document.querySelector('#no-player2').classList.remove('disabled');
+                        document.querySelector('#yes-player1').classList.add('disabled');
+                        document.querySelector('#no-player1').classList.add('disabled');
+    
+                    } else {document.querySelector('#player2-9').classList.add('disabled');           
+                            document.querySelector('#player1-12').classList.remove('disabled');
+                            document.querySelector('#yes-player1').classList.remove('disabled');
+                            document.querySelector('#no-player1').classList.remove('disabled');
+                            document.querySelector('#yes-player2').classList.add('disabled');
+                            document.querySelector('#no-player2').classList.add('disabled'); }
+                    break;
+            case 12:
+                if(this.firstAskTruco === 'Player1'){
+                    document.querySelector('#player2-12').classList.add('disabled');
+                    
 
+                } else {document.querySelector('#player1-12').classList.add('disabled');           
+                }
+                break;
         }
     }
     
@@ -757,8 +832,6 @@ class Game {
         console.log(this.playerTurn)
 
         if (this.isRoundOver()){
-            console.log(this.player1.score)
-            console.log(this.player2.score)
             const timeoutId = setTimeout(() => {
                 this.clearTable();
                 
