@@ -5,6 +5,10 @@
 
 }
 
+body {
+    background-image: url(../images/fundo.jpg);
+}
+
 
 .divBar {
     height: 200px;
