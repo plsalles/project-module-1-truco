@@ -78,6 +78,9 @@ class Game {
         this.trucoPlayer2 = false;
         this.trucoMultiplier = 1;
         this.firstAskTruco = '';
+        this.trucoIndex = 1;
+        this.responseOnly = false;
+
         
         
 
@@ -156,20 +159,20 @@ class Game {
         
         this.htmlTrucoPlayerButtons += `<div>`;
         this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="truco-player1">TRUCO</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-6">6</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-9">9</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player1-12">12</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="yes-player1">YES</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="no-player1">NO</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player1-6">6</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player1-9">9</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player1-12">12</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="yes-player1">YES</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="no-player1">NO</button>`;
         this.htmlTrucoPlayerButtons += `</div>`;
         this.htmlTrucoPlayerButtons += `<div></div>`;
         this.htmlTrucoPlayerButtons += `<div>`;
         this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="truco-player2">TRUCO</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-6">6</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-9">9</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="player2-12">12</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="yes-player2">YES</button>`;
-        this.htmlTrucoPlayerButtons += `<button class="cards button-footer"  id="no-player2">NO</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player2-6">6</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player2-9">9</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="player2-12">12</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="yes-player2">YES</button>`;
+        this.htmlTrucoPlayerButtons += `<button class="cards button-footer disabled"  id="no-player2">NO</button>`;
         this.htmlTrucoPlayerButtons += `</div>`;
 
 
@@ -207,15 +210,10 @@ class Game {
 
         document.querySelectorAll(".cards").forEach((card) => {
             card.addEventListener("click", () => {
-            console.log(card) 
-            console.log(`first ask truco ${this.firstAskTruco}`) 
-            console.log(`this.truco ${this.truco}`)
-            console.log (`truco miltiplier ${this.trucoMultiplier}`) 
             
-                
-
                 if (this.cardsPlayed < 2){  
                     if(this.playerTurn == "Player1"){
+
                         if(this.truco === false){
                         
                             if(card === document.querySelector('.card1-player1')){
@@ -247,12 +245,14 @@ class Game {
                                 this.turnPlayerCards();
                             }
 
-                            if(card === document.querySelector('#truco-player1') && this.truco === false){
+                            if(card === document.querySelector('#truco-player1')){
                                 console.log('TRUCO!!!');
                                 this.truco = true;
                                 this.trucoPlayer1 = true;
                                 this.firstAskTruco = 'Player1';
+                                this.trucoIndex = 3;
                                 this.playerTurn = "Player2";
+                                this.updateTrucoButtons();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
@@ -280,7 +280,9 @@ class Game {
                                     
                                 
                             }
-                            if(this.firstAskTruco === 'Player2' && this.truco === false && this.trucoMultiplier === 9 && card === document.querySelector('#player1-12')){
+                            console.log('teste')
+                            console.log(this.trucoMultiplier === 9)
+                            if(this.firstAskTruco === 'Player2' && this.trucoMultiplier === 9 && card === document.querySelector('#player1-12')){
                                 
                                 console.log('12!!!');
                                 this.truco = true;
@@ -297,14 +299,55 @@ class Game {
                     } 
                         
                         if (this.truco === true && this.trucoPlayer1 === false){
+
                             if(card === document.querySelector('#yes-player1')){
                                 this.truco = false;
                                 this.trucoPlayer2 = false;
-                                this.playerTurn = "Player2";
+                                //this.playerTurn = "Player2";
+                                if (this.responseOnly === true && this.playerTurn === 'PLayer1'){
+                                    this.responseOnly = false;
+                                } else {this.playerTurn = "Player2";}
                                 this.updateTrucoMultiplier();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
+                            }
+
+                            if(this.firstAskTruco === "Player2" && this.trucoIndex === 3 && card === document.querySelector('#player1-6')){
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.trucoPlayer2 = false;
+                                this.playerTurn = "Player2";
+                                this.trucoMultiplier = 3;
+                                this.trucoIndex = 6;
+                                this.responseOnly = true;
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+
+                            }
+
+                            if(this.firstAskTruco === "Player1" && this.trucoIndex === 6 && card === document.querySelector('#player1-9')){
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.trucoPlayer2 = false;
+                                this.playerTurn = "Player2";
+                                this.trucoMultiplier = 6;
+                                this.trucoIndex = 9;
+                                this.responseOnly = false;
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(this.firstAskTruco === "Player2" && this.trucoIndex === 9 && card === document.querySelector('#player1-12')){
+                                this.truco = true;
+                                this.trucoPlayer1 = true;
+                                this.trucoPlayer2 = false;
+                                this.playerTurn = "Player2";
+                                this.trucoMultiplier = 9;
+                                this.trucoIndex = 12;
+                                this.responseOnly = true;
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
                             }
 
                             if(card === document.querySelector('#no-player1')){
@@ -319,8 +362,7 @@ class Game {
                     }
             
                     if(this.playerTurn == "Player2"){
-                        console.log('player 2 turn true')
-                        
+                       
                         if(this.truco === false){
                         
                             if(card === document.querySelector('.card1-player2')){
@@ -355,7 +397,9 @@ class Game {
                                 this.truco = true;
                                 this.trucoPlayer2 = true;
                                 this.firstAskTruco = 'Player2';
+                                this.trucoIndex = 3;
                                 this.playerTurn = "Player1";
+                                this.updateTrucoButtons();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
@@ -366,6 +410,7 @@ class Game {
                                 console.log('6!!!');
                                 this.truco = true;
                                 this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
@@ -378,42 +423,82 @@ class Game {
                                 console.log('9!!!');
                                 this.truco = true;
                                 this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
+                                this.responseOnly = false;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
                                 
                             }
 
-                            if(this.firstAskTruco === 'Player1' && this.truco === false && this.trucoMultiplier === 9 && card === document.querySelector('#player2-12')){
+                            if(this.firstAskTruco === 'Player1' && this.trucoMultiplier === 9 && card === document.querySelector('#player2-12')){
                                 
                                 console.log('12!!!');
                                 this.truco = true;
                                 this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
                                 this.playerTurn = "Player1";
+                                this.responseOnly = true;
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                     
                                 
                             }
-                           
-
-
-                            
-
-
                         }
                         
                         if (this.truco === true && this.trucoPlayer2 === false){
-                            console.log('pending player2 response')
+                            
                             if(card === document.querySelector('#yes-player2')){
                                 this.truco = false;
                                 this.trucoPlayer1 = false;
-                                this.playerTurn = "Player1";
+                                
+                                if (this.responseOnly === true && this.playerTurn === 'Player2'){
+                                    this.responseOnly = false;
+                                } else {this.playerTurn = "Player1";}
+
                                 this.updateTrucoMultiplier();
                                 this.updatePlayerTurn();
                                 this.turnPlayerCards();
                                 
+                            }
+
+                            if(this.firstAskTruco === "Player1" && this.trucoIndex === 3 && card === document.querySelector('#player2-6')){
+                                console.log('6direto')
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
+                                this.playerTurn = "Player1";
+                                this.trucoMultiplier = 3;
+                                this.trucoIndex = 6;
+                                this.responseOnly = true;
+                                console.log(this.trucoPlayer1)
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(this.firstAskTruco === "Player2" && this.trucoIndex === 6 && card === document.querySelector('#player2-9')){
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
+                                this.playerTurn = "Player1";
+                                this.trucoMultiplier = 6;
+                                this.trucoIndex = 9;
+                                this.responseOnly = false;
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
+                            }
+
+                            if(this.firstAskTruco === "Player1" && this.trucoIndex === 9 && card === document.querySelector('#player2-12')){
+                                this.truco = true;
+                                this.trucoPlayer2 = true;
+                                this.trucoPlayer1 = false;
+                                this.playerTurn = "Player1";
+                                this.trucoMultiplier = 9;
+                                this.trucoIndex = 12;
+                                this.responseOnly = true;
+                                this.updatePlayerTurn();
+                                this.turnPlayerCards();
                             }
 
                             if(card === document.querySelector('#no-player2')){
@@ -438,6 +523,17 @@ class Game {
         
     }
 
+    updateTrucoButtons = () => {
+        switch (this.trucoIndex){
+            case 3: 
+                document.querySelector('#truco-player1').classList.add('disabled');
+                document.querySelector('#truco-player2').classList.add('disabled');
+                break;
+
+
+
+        }
+    }
     
     updateTrucoMultiplier = () => {
         switch (this.trucoMultiplier){
